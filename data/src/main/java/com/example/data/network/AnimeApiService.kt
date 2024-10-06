@@ -29,9 +29,9 @@ interface AnimeApiService {
         @Query("min_score") minScore: Int,
         @Query("order_by") orderBy: String = "rank",
         @Query("limit") limit: Int = 10
-    ): AnimeData
+    ): AllAnimeData
     @GET("anime")
-    suspend fun getAnimeByName(@Query("q") animeName : String) : AnimeData
+    suspend fun getAnimeByName(@Query("q") animeName : String) : AllAnimeData
     @GET("anime")
-    suspend fun getAnimeByGenre(@Query("genres")genreId : Int, @Query("page") page : Int) : AnimeData
+    suspend fun getAnimeByGenre(@Query("genres")genreId : Int, @Query("page") page : Int) :AllAnimeData
 }

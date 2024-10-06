@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -53,4 +55,12 @@ dependencies {
     implementation (libs.gson)
     implementation (libs.converter.gson)
 
+//Dagger - Hilt
+    implementation ("com.google.dagger:hilt-android:2.51.1")
+    kapt ("com.google.dagger:hilt-android-compiler:2.51.1")
+    kapt (libs.androidx.hilt.compiler.v100)
+    implementation (libs.androidx.hilt.navigation.compose.v100)
+}
+kapt {
+    correctErrorTypes = true
 }
