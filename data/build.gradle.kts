@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -39,6 +40,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -60,6 +62,15 @@ dependencies {
     kapt ("com.google.dagger:hilt-android-compiler:2.51.1")
     kapt (libs.androidx.hilt.compiler.v100)
     implementation (libs.androidx.hilt.navigation.compose.v100)
+
+    //firebase
+    implementation (libs.firebase.auth)
+    implementation (libs.firebase.database.v2005)
+    implementation (libs.firebase.firestore.ktx)
+
+    // datastore
+    implementation (libs.androidx.datastore.preferences)
+
 }
 kapt {
     correctErrorTypes = true

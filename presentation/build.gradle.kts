@@ -62,9 +62,15 @@ dependencies {
     implementation (libs.ui)
     implementation (libs.androidx.material)
     implementation (libs.ui.tooling.preview)
+    //nav
+    implementation (libs.androidx.navigation.runtime.ktx)
+    implementation (libs.androidx.navigation.compose)
 
-
+    //matrial3
+    implementation (libs.androidx.material)
+    implementation (libs.material3)
 }
+
 kapt {
     correctErrorTypes = true
 }

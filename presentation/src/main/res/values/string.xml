@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Anime</string>
+    <string name="signup">SignUp</string>
+    <string name="login">LogIn</string>
+    <string name="otaku_hub">Otaku Hub</string>
+    <string name="email_or_username">Email or Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="remember_me_icon">Remember Me Icon</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="or_continue_with">Or continue with</string>
+    <string name="facebook_icon">Facebook Icon</string>
+    <string name="google_icon">Google Icon</string>
+    <string name="welcome_back">Welcome back!</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="don_t_have_an_account_signup_here">Don\'t have an account? Signup here</string>
+    <string name="already_have_an_account_login_here">Already have an account? Login here</string>
+    <string name="email">Email</string>
+    <string name="userName">User Name</string>
+    <string name="sharing_anime">Sharing Anime</string>
+</resources>

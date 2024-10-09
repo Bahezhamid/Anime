@@ -4,16 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-
 import com.example.anime.ui.theme.AnimeTheme
-import com.example.presentation.HomeScreen.HomeScreen
-import com.example.presentation.HomeScreen.HomeScreenViewModel
+import com.example.presentation.AnimeApp
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -24,26 +22,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AnimeTheme {
-               val homeScreenViewModel = hiltViewModel<HomeScreenViewModel>()
-         HomeScreen(homeScreenViewModel)
+            AnimeTheme{
+                AnimeApp()
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AnimeTheme {
-        Greeting("Android")
-    }
-}

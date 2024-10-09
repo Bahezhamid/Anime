@@ -1,9 +1,5 @@
-package com.example.presentation.HomeScreen
-
-import android.net.http.HttpException
-import android.os.Build
+package com.example.presentation.HomePage
 import android.util.Log
-import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.entity.AnimeDataWithPage
@@ -14,7 +10,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
-
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val animeDataRepository: AnimeDataRepository
@@ -36,4 +31,6 @@ class HomeScreenViewModel @Inject constructor(
             }
         }
     }
+
+
 }
