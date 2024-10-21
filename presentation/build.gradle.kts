@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     //viewModel
@@ -69,6 +70,19 @@ dependencies {
     //matrial3
     implementation (libs.androidx.material)
     implementation (libs.material3)
+
+    // Local Unit Tests
+    // Unit testing dependencies using explicit strings for older versions
+    testImplementation(libs.junit) // JUnit 4
+    testImplementation(libs.hamcrest.all) // Hamcrest
+    testImplementation(libs.androidx.core) // AndroidX Test Core
+    testImplementation(libs.robolectric) // Robolectric
+    testImplementation(libs.kotlinx.coroutines.test) // Kotlin Coroutines Test
+    testImplementation(libs.truth) // Truth
+    testImplementation(libs.mockito.core) // Mockito Core
+    testImplementation(libs.dexmaker.mockito) // Dexmaker for Mockito
+    testImplementation(libs.kotlinx.coroutines.test.v173) // Kotlin Coroutines Test (version 1.7.3)
+    testImplementation(libs.mockk) // MockK
 }
 
 kapt {

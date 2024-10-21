@@ -166,7 +166,7 @@ class LoginAndSignUpViewModel @Inject constructor(
                             isSuccess = false,
                             isLoading = false,
                             isPasswordResetSent = false,
-                            errorMessage = "Wrong Email"
+                            errorMessage = "Wrong Email Address"
                         )
                     }
 

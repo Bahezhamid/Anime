@@ -27,7 +27,7 @@ class HomeScreenViewModel @Inject constructor(
                 _uiState.value = result
 
             } catch (e: IOException) {
-                Log.d("errrr","error")
+                Log.d("error","error")
             }
         }
     }
