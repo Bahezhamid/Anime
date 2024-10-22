@@ -20,4 +20,5 @@ class AuthRepositoryImp(
     = firebaseService.deleteAnimeFromFavorite(animeId = animeId , userId = userId)
     override suspend fun getAnimeStatus(animeId: Int, userId: String) : Boolean
     = firebaseService.getAnimeStatus(animeId = animeId , userId = userId)
+    override suspend fun getAllSavedAnime(userId: String): List<FavoriteAnime> = firebaseService.getAllSavedAnime(userId = userId)
 }

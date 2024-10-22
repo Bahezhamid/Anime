@@ -382,16 +382,12 @@ fun IconsFunction(
                 } else {
                     allAnimeDetails?.id
                         ?.let {
-                            allAnimeDetails.title?.let { it1 ->
-                                allAnimeDetails.imageUrl?.let { it2 ->
-                                    FavoriteAnime(
-                                        animeId = it,
-                                        animeName = it1,
-                                        animePoster = it2,
-                                        userId = homePageViewModel.loginUiState.value.userid
-                                    )
-                                }
-                            }
+                         FavoriteAnime(
+                             animeId = it,
+                             animeName = allAnimeDetails.title,
+                             animePoster = allAnimeDetails.imageUrl,
+                             userId = homePageViewModel.loginUiState.value.userid
+                         )
                         }
                         ?.let { homePageViewModel.insertAnimeToFavorite(favoriteAnime = it) }
                 }
@@ -423,7 +419,6 @@ fun CharacterCard(
     onCharacterClicked : (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Log.d("charactermmmm",characterId.toString())
     Box(
         modifier = Modifier
             .size(80.dp)

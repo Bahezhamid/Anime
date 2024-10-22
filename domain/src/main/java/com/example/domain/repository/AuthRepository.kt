@@ -11,4 +11,5 @@ interface AuthRepository {
     suspend fun addAnimeToFavorite(favoriteAnime: FavoriteAnime)
     suspend fun deleteAnimeFromFavorite(animeId : Int , userId: String)
     suspend fun getAnimeStatus(animeId: Int , userId : String) :Boolean
+    suspend fun getAllSavedAnime(userId: String) : List<FavoriteAnime>
 }

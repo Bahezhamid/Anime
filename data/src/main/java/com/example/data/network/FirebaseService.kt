@@ -147,4 +147,24 @@ class FirebaseService(
             .await()
       return !doc.isEmpty
     }
+
+    suspend fun getAllSavedAnime(userId: String): List<FavoriteAnime> {
+        return withContext(Dispatchers.IO) {
+
+            val querySnapshot = firestore.collection("favorite")
+                .whereEqualTo("userId", userId)
+                .get()
+                .await()
+
+            querySnapshot.documents.map { document ->
+                FavoriteAnime(
+                    animeId = document.getLong("animeId")?.toInt() ?: 0,
+                    animePoster = document.getString("animePoster") ?: "",
+                    animeName = document.getString("animeName") ?: "",
+                    userId = document.getString("userId") ?: ""
+                )
+            }
+        }
+    }
+
 }

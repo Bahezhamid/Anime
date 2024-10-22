@@ -46,6 +46,8 @@ import com.example.presentation.HomePage.HomeScreen
 import com.example.presentation.LandingPage.LandingPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpViewModel
+import com.example.presentation.SavedAnimePage.SavedAnimeScreen
+import com.example.presentation.SavedAnimePage.SavedAnimeViewModel
 import com.example.presentation.navigation.AnimeScreen
 
 @Composable
@@ -55,6 +57,7 @@ fun AnimeApp(
     val homeScreenViewModel = hiltViewModel<HomeScreenViewModel>()
     val loginAndSignUpViewModel = hiltViewModel<LoginAndSignUpViewModel>()
     val animeDetailsScreenViewModel = hiltViewModel<AnimeDetailsViewModel>()
+    val savedAnimeViewModel = hiltViewModel<SavedAnimeViewModel>()
     NavHost(
         navController = navController,
         startDestination = AnimeScreen.Start.route,
@@ -159,6 +162,21 @@ fun AnimeApp(
                 },
                 homePageViewModel = homeScreenViewModel,
                 animeDetailsViewModel = animeDetailsScreenViewModel
+            )
+        }
+
+        composable(route = AnimeScreen.SavedAnimeScreen.route){
+            SavedAnimeScreen(
+                onHomeClicked = { navController.navigate(AnimeScreen.HomePage.route) },
+                onBookClicked = {navController.navigate(AnimeScreen.AllAnimeScreen.route)},
+                onProfileClicked = {navController.navigate(AnimeScreen.ProfilePage.route)},
+                loginAndSignUpViewModel = loginAndSignUpViewModel,
+                savedAnimeViewModel = savedAnimeViewModel,
+                onAnimeClicked = { animeId ->
+                    navController.navigate("animeDetails/$animeId")
+                },
+                onCreateNewListClicked = {navController.navigate(AnimeScreen.AllAnimeScreen.route)},
+                onSearchButtonClicked = {navController.navigate("searchScreen")}
             )
         }
     }
