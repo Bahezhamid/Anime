@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -52,6 +53,7 @@ import com.example.presentation.HomePage.HomeScreen
 import com.example.presentation.LandingPage.LandingPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpViewModel
+import com.example.presentation.ProfilePage.ProfileScreen
 import com.example.presentation.SavedAnimePage.SavedAnimeScreen
 import com.example.presentation.SavedAnimePage.SavedAnimeViewModel
 import com.example.presentation.SearchScreenPage.SearchScreen
@@ -238,6 +240,29 @@ fun AnimeApp(
                     navController.navigate("animeDetails/$animeId")
                 },
                 searchScreenViewModel = searchScreenViewModel
+            )
+        }
+        composable(route = AnimeScreen.ProfilePage.route) {
+
+            ProfileScreen(
+                onHomeClicked = {navController.navigate(AnimeScreen.HomePage.route)},
+                onSavedClicked =  {navController.navigate(AnimeScreen.SavedAnimeScreen.route)},
+                onBookClicked =  {navController.navigate(AnimeScreen.AllAnimeScreen.route)},
+                onUserDateClicked = {navController.navigate(AnimeScreen.UserDetailsPage.route)},
+                onEmailChangeClicked = {navController.navigate(AnimeScreen.EmailChangePage.route)},
+                onPasswordChangeClicked = {navController.navigate(AnimeScreen.PasswordChangePage.route)},
+                onSignOutButtonClicked = {
+                    loginAndSignUpViewModel.signOut()
+                    navController.navigate(AnimeScreen.Start
+                        .route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                    savedAnimeViewModel.removeSavedAnime()
+                },
+
+                userData = loginAndSignUpViewModel.loginUiState.collectAsState().value
             )
         }
     }
