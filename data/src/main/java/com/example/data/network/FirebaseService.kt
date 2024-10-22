@@ -167,4 +167,13 @@ class FirebaseService(
         }
     }
 
+    suspend fun getNumberOfAnimeAddedToFavorite(userId: String) : Int {
+        val db = Firebase.firestore
+        val querySnapshot = db.collection("favorite")
+            .whereEqualTo("userId", userId)
+            .get()
+            .await()
+        return querySnapshot.size()
+    }
+
 }
