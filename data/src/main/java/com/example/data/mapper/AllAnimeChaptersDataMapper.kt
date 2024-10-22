@@ -10,7 +10,8 @@ fun Data.toAnimeChapters() : AnimeChaptersData {
         id = malId,
         imageUrl = images?.jpg?.imageUrl,
         title = title,
-        episodeNumber = episode
+        episodeNumber = episode,
+        url = url
     )
 }
 fun AnimeChapters.toAllAnimeChaptersData() : AllAnimeChaptersData {

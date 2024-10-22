@@ -39,6 +39,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.presentation.AllAnimePage.AllAnimeScreen
+import com.example.presentation.AllAnimePage.AllAnimeScreenViewModel
+import com.example.presentation.AnimeChapterPage.AnimeChaptersScreen
+import com.example.presentation.AnimeChapterPage.AnimeChaptersViewModel
 import com.example.presentation.AnimeDetailsPage.AnimeDetailsScreen
 import com.example.presentation.AnimeDetailsPage.AnimeDetailsViewModel
 import com.example.presentation.HomePage.HomeScreenViewModel
@@ -58,6 +62,8 @@ fun AnimeApp(
     val loginAndSignUpViewModel = hiltViewModel<LoginAndSignUpViewModel>()
     val animeDetailsScreenViewModel = hiltViewModel<AnimeDetailsViewModel>()
     val savedAnimeViewModel = hiltViewModel<SavedAnimeViewModel>()
+    val allAnimeScreenViewModel = hiltViewModel<AllAnimeScreenViewModel>()
+    val animeChaptersViewModel = hiltViewModel<AnimeChaptersViewModel>()
     NavHost(
         navController = navController,
         startDestination = AnimeScreen.Start.route,
@@ -178,6 +184,31 @@ fun AnimeApp(
                 onCreateNewListClicked = {navController.navigate(AnimeScreen.AllAnimeScreen.route)},
                 onSearchButtonClicked = {navController.navigate("searchScreen")}
             )
+        }
+
+        composable(route = AnimeScreen.AllAnimeScreen.route) {
+            AllAnimeScreen(
+                onHomeButtonClicked = {navController.navigate(AnimeScreen.HomePage.route)},
+                onSavedButtonClicked = {navController.navigate(AnimeScreen.SavedAnimeScreen.route)},
+                onProfileClicked = {navController.navigate(AnimeScreen.ProfilePage.route)},
+                onAnimeClicked = {animeId->
+                    navController.navigate("animeDetails/$animeId")
+                },
+                allAnimeViewScreenModel = allAnimeScreenViewModel,
+                onSearchButtonClicked = {navController.navigate("searchScreen")}
+            )
+        }
+
+        composable(route = AnimeScreen.AnimeChaptersScreen.route) {
+                backStackEntry ->
+            val animeId = backStackEntry.arguments?.getString("animeId")?.toIntOrNull()
+            if (animeId != null) {
+                AnimeChaptersScreen(
+                    animeId = animeId,
+                    onBackButtonClicked = { navController.navigateUp() },
+                    animeChaptersViewModel = animeChaptersViewModel
+                )
+            }
         }
     }
     }
