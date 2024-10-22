@@ -54,6 +54,8 @@ import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpViewModel
 import com.example.presentation.SavedAnimePage.SavedAnimeScreen
 import com.example.presentation.SavedAnimePage.SavedAnimeViewModel
+import com.example.presentation.SearchScreenPage.SearchScreen
+import com.example.presentation.SearchScreenPage.SearchScreenViewModel
 import com.example.presentation.navigation.AnimeScreen
 
 @Composable
@@ -67,6 +69,7 @@ fun AnimeApp(
     val allAnimeScreenViewModel = hiltViewModel<AllAnimeScreenViewModel>()
     val animeChaptersViewModel = hiltViewModel<AnimeChaptersViewModel>()
     val characterDetailsViewModel = hiltViewModel<CharacterDetailsViewModel>()
+    val searchScreenViewModel = hiltViewModel<SearchScreenViewModel>()
     NavHost(
         navController = navController,
         startDestination = AnimeScreen.Start.route,
@@ -226,6 +229,16 @@ fun AnimeApp(
                     charactersDetailsViewModel = characterDetailsViewModel
                 )
             }
+        }
+
+        composable(route = AnimeScreen.SearchScreen.route){
+            SearchScreen (
+                onBackPressed = {navController.navigateUp()},
+                onAnimeClicked = {animeId->
+                    navController.navigate("animeDetails/$animeId")
+                },
+                searchScreenViewModel = searchScreenViewModel
+            )
         }
     }
     }
