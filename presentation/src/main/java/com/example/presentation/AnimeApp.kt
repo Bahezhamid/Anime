@@ -1,5 +1,7 @@
 package com.example.presentation
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.Image
@@ -28,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,8 +39,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.presentation.AnimeDetailsPage.AnimeDetailsScreen
+import com.example.presentation.AnimeDetailsPage.AnimeDetailsViewModel
 import com.example.presentation.HomePage.HomeScreenViewModel
 import com.example.presentation.HomePage.HomeScreen
+import com.example.presentation.LandingPage.LandingPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpViewModel
 import com.example.presentation.navigation.AnimeScreen
@@ -48,15 +54,26 @@ fun AnimeApp(
 ) {
     val homeScreenViewModel = hiltViewModel<HomeScreenViewModel>()
     val loginAndSignUpViewModel = hiltViewModel<LoginAndSignUpViewModel>()
+    val animeDetailsScreenViewModel = hiltViewModel<AnimeDetailsViewModel>()
     NavHost(
         navController = navController,
-        startDestination = AnimeScreen.LogIn.route,
+        startDestination = AnimeScreen.Start.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None },
         modifier = Modifier.fillMaxSize()
     ) {
+        composable(route = AnimeScreen.Start.route) {
+            LandingPage(
+                onLoginButtonClicked = { navController.navigate(AnimeScreen.LogIn.route) },
+                onSignButtonClicked = { navController.navigate(AnimeScreen.SignUp.route) },
+                loginAndSignUpViewModel = loginAndSignUpViewModel,
+                homePageViewModel = homeScreenViewModel,
+                onLoginAndSignUpButtonClicked = {navController.navigate(AnimeScreen.HomePage.route)},
+                modifier = Modifier.fillMaxSize()
+            )
+        }
         composable(route = AnimeScreen.LogIn.route) {
             LoginAndSignUpPage(
                 title = stringResource(R.string.welcome_back),
@@ -121,6 +138,27 @@ fun AnimeApp(
                     navController.navigate("searchScreen")
                 }
 
+            )
+        }
+        composable(
+            route = AnimeScreen.AnimeDetailsPage.route
+        ) { backStackEntry ->
+            val animeId = backStackEntry.arguments?.getString("animeId")?.toIntOrNull()
+            val context = LocalContext.current
+            AnimeDetailsScreen(
+                animeId = animeId,
+                onBackPressed = { navController.navigateUp() },
+                onPlayButtonClicked = {id ->
+                    navController.navigate("animeChaptersScreen/$id")
+                },
+                onCharacterClicked = { characterId ->
+                    navController.navigate("characterDetailsPage/$characterId")
+                },
+                onShareButtonClicked = { subject: String, animeDetails: String  , link : String ->
+                    shareAnime(context, subject = subject, animeDetails = animeDetails , link = link)
+                },
+                homePageViewModel = homeScreenViewModel,
+                animeDetailsViewModel = animeDetailsScreenViewModel
             )
         }
     }
@@ -278,5 +316,21 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
         modifier = modifier.size(200.dp),
         painter = painterResource(R.drawable.loading_img),
         contentDescription = "Loading"
+    )
+}
+
+private fun shareAnime(context: Context, subject: String, animeDetails: String, link: String) {
+    val shareText = "$animeDetails\n\nCheck this out: $link"
+
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, shareText)
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.sharing_anime)
+        )
     )
 }

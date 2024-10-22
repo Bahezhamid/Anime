@@ -12,5 +12,6 @@ data class AnimeDataById(
     val genre : List<String?>,
     val episodes : Int?,
     val episodesMin : String?,
-    val description : String?
+    val description : String?,
+    val animeUrl : String?,
 )

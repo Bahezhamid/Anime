@@ -16,6 +16,7 @@ fun Data.toAnimeDataById() : AnimeDataById {
         genre =genres?.map { it.name } ?: emptyList(),
         episodes = episodes,
         episodesMin = duration,
-        description = synopsis
+        description = synopsis,
+        animeUrl = url
     )
 }

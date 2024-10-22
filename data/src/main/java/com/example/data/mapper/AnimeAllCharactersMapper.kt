@@ -6,8 +6,8 @@ import com.example.domain.entity.AnimeAllCharactersData
 
 fun Data.toAnimeAllCharactersData() : AnimeAllCharactersData {
     return AnimeAllCharactersData(
-        id = malId,
-        imageUrl = images?.jpg?.imageUrl
+        id = character?.malId,
+        imageUrl = character?.images?.jpg?.imageUrl
     )
 }
 
