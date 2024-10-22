@@ -1,6 +1,9 @@
 package com.example.data.network
+import android.util.Log
+import com.example.domain.entity.FavoriteAnime
 import com.example.domain.entity.UsersData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +13,8 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class FirebaseService(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
 ) {
     suspend fun login(email: String, password: String): UsersData {
         try {
@@ -108,5 +112,39 @@ class FirebaseService(
      }
     suspend fun signOut() {
        firebaseAuth.signOut()
+    }
+
+    suspend fun addAnimeToFavorite(favoriteAnime: FavoriteAnime) {
+
+            firestore.collection("favorite").add(favoriteAnime)
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Anime added to favorites!")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Firestore", "Error adding document", e)
+                }
+    }
+
+    suspend fun deleteAnimeFromFavorite(animeId : Int , userId: String) {
+
+        val querySnapshot = firestore.collection("favorite")
+            .whereEqualTo("animeId", animeId)
+            .whereEqualTo("userId", userId)
+            .get()
+            .await()
+
+        for (document in querySnapshot) {
+            document.reference.delete()
+        }
+    }
+
+    suspend fun getAnimeStatus(animeId: Int , userId : String) : Boolean {
+
+        val doc = firestore.collection("favorite")
+            .whereEqualTo("animeId", animeId)
+            .whereEqualTo("userId", userId)
+            .get()
+            .await()
+      return !doc.isEmpty
     }
 }

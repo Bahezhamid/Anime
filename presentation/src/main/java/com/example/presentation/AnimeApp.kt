@@ -6,10 +6,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,17 +27,17 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.presentation.HomePage.HomeScreen
 import com.example.presentation.HomePage.HomeScreenViewModel
+import com.example.presentation.HomePage.HomeScreen
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpPage
 import com.example.presentation.LoginAndSignUpPage.LoginAndSignUpViewModel
 import com.example.presentation.navigation.AnimeScreen
@@ -98,10 +103,123 @@ fun AnimeApp(
             )
         }
         composable(route = AnimeScreen.HomePage.route) {
-            HomeScreen(homeScreenViewModel = homeScreenViewModel)
+            HomeScreen(
+                onAnimeClicked = { animeId ->
+                    navController.navigate("animeDetails/$animeId")
+                },
+                onPlayButtonClicked = {animeId ->
+                    navController.navigate("animeChaptersScreen/$animeId")
+                },
+                onSavedClicked = {navController.navigate(AnimeScreen.SavedAnimeScreen.route)},
+                onBookClicked = {navController.navigate(AnimeScreen.AllAnimeScreen.route)},
+                onProfileClicked = {navController.navigate(AnimeScreen.ProfilePage.route)},
+                onInfoButtonClicked = {animeId ->
+                    navController.navigate("animeDetails/$animeId")
+                },
+                homePageViewModel = homeScreenViewModel,
+                onSearchButtonClicked = {
+                    navController.navigate("searchScreen")
+                }
+
+            )
         }
     }
     }
+
+@Composable
+fun AnimeBottomNavigationBar(
+    selectedTab: BottomNavItem,
+    onTabSelected: (BottomNavItem) -> Unit,
+    onHomeClick: () -> Unit,
+    onSavedClick: () -> Unit,
+    onBookClick: () -> Unit,
+    onProfileClick: () -> Unit
+) {
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colorScheme.secondary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        elevation = 8.dp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .navigationBarsPadding()
+    ) {
+        BottomNavigationItem(
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_home),
+                    contentDescription = "Home",
+                    modifier = Modifier
+                        .size(25.dp)
+                        .graphicsLayer(alpha = if (selectedTab == BottomNavItem.Home) 1f else 0.5f),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            },
+            selected = selectedTab == BottomNavItem.Home,
+            onClick = {
+                onTabSelected(BottomNavItem.Home)
+                onHomeClick()
+            }
+        )
+        BottomNavigationItem(
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_saved),
+                    contentDescription = "Saved",
+                    modifier = Modifier
+                        .size(25.dp)
+                        .graphicsLayer(alpha = if (selectedTab == BottomNavItem.Saved) 1f else 0.5f),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            },
+            selected = selectedTab == BottomNavItem.Saved,
+            onClick = {
+                onTabSelected(BottomNavItem.Saved)
+                onSavedClick()
+            }
+        )
+        BottomNavigationItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.VideoLibrary,
+                    contentDescription = "Anime And Manga",
+                    modifier = Modifier
+                        .size(25.dp)
+                        .graphicsLayer(alpha = if (selectedTab == BottomNavItem.Book) 1f else 0.5f),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            },
+            selected = selectedTab == BottomNavItem.Book,
+            onClick = {
+                onTabSelected(BottomNavItem.Book)
+                onBookClick()
+            }
+        )
+        BottomNavigationItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Filled.Person,
+                    contentDescription = "Profile",
+                    modifier = Modifier
+                        .size(25.dp)
+                        .graphicsLayer(alpha = if (selectedTab == BottomNavItem.Profile) 1f else 0.5f),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            },
+            selected = selectedTab == BottomNavItem.Profile,
+            onClick = {
+                onTabSelected(BottomNavItem.Profile)
+                onProfileClick()
+            }
+        )
+    }
+}
+
+enum class BottomNavItem {
+    Home, Saved, Book, Profile
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnimeTopAppBar(

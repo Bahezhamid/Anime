@@ -52,6 +52,10 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Icons
+    implementation(libs.androidx.material.icons.extended)
+
     //viewModel
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     //Dagger - Hilt
@@ -71,6 +75,9 @@ dependencies {
     implementation (libs.androidx.material)
     implementation (libs.material3)
 
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     // Local Unit Tests
     // Unit testing dependencies using explicit strings for older versions
     testImplementation(libs.junit) // JUnit 4
@@ -83,6 +90,7 @@ dependencies {
     testImplementation(libs.dexmaker.mockito) // Dexmaker for Mockito
     testImplementation(libs.kotlinx.coroutines.test.v173) // Kotlin Coroutines Test (version 1.7.3)
     testImplementation(libs.mockk) // MockK
+    implementation(kotlin("script-runtime"))
 }
 
 kapt {

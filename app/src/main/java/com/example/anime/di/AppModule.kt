@@ -15,6 +15,7 @@ import com.example.domain.repository.AuthRepository
 import com.example.domain.repository.UserPreferencesRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
@@ -61,8 +62,14 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun provideFirebaseService(firebaseAuth: FirebaseAuth): FirebaseService {
-        return FirebaseService(firebaseAuth)
+    fun provideFireStore() : FirebaseFirestore {
+       val firestore = FirebaseFirestore.getInstance()
+        return firestore
+    }
+    @Provides
+    @Singleton
+    fun provideFirebaseService(firebaseAuth: FirebaseAuth , firestore: FirebaseFirestore): FirebaseService {
+        return FirebaseService(firebaseAuth , firestore)
     }
 
     @Provides

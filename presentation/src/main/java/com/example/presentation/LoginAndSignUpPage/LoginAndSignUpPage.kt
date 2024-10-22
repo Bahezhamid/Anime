@@ -55,8 +55,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.presentation.AnimeTopAppBar
 import com.example.presentation.HomePage.HomeScreenViewModel
+import com.example.presentation.AnimeTopAppBar
 import com.example.presentation.LoadingScreen
 import com.example.presentation.R
 import kotlinx.coroutines.launch
@@ -72,7 +72,7 @@ fun LoginAndSignUpPage(
     onBackPressed : () -> Unit,
     onAuthSwitchClick : () -> Unit,
     onLoginAndSignUpButtonClicked : () -> Unit,
-    viewModel: LoginAndSignUpViewModel ,
+    viewModel: LoginAndSignUpViewModel,
     homePageViewModel: HomeScreenViewModel,
     isForgetPasswordPage : Boolean = false,
     onForgetPasswordClicked :() -> Unit = {},

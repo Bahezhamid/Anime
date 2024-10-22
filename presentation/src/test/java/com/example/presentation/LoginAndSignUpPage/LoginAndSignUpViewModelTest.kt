@@ -85,7 +85,7 @@ class LoginAndSignUpViewModelTest{
         assertThat(loginAndSignUpViewModel.uiState.value).isEqualTo(expectedData)
     }
     @Test
-    fun `if email pr password is wrong should return error message` () = runTest {
+    fun `if email or password is wrong should return error message` () = runTest {
         val expectedData = UsersData(
             errorMessage = "Wrong Email Or Password",
             isSuccess = false
