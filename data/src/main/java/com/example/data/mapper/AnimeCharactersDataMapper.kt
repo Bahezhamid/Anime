@@ -14,6 +14,7 @@ fun Data.toCharactersData() : AnimeCharactersData {
         imageUrl = images?.jpg?.imageUrl,
         description = about,
         listOfAnime = anime?.toCharactersAnime(),
+        favorites = favorites,
         listOfVoiceActor = voices?.toCharactersVoiceActor()
     )
 }

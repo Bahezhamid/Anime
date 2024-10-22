@@ -5,6 +5,7 @@ data class AnimeCharactersData(
     val name: String?,
     val imageUrl: String?,
     val description : String?,
+    val favorites : Int?,
     val listOfAnime : List<CharactersAnime?>?,
     val listOfVoiceActor : List<CharactersVoiceActor?>?
 )

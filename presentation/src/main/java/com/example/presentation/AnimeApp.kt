@@ -45,6 +45,8 @@ import com.example.presentation.AnimeChapterPage.AnimeChaptersScreen
 import com.example.presentation.AnimeChapterPage.AnimeChaptersViewModel
 import com.example.presentation.AnimeDetailsPage.AnimeDetailsScreen
 import com.example.presentation.AnimeDetailsPage.AnimeDetailsViewModel
+import com.example.presentation.CharacterDetailsPage.CharacterDetailsScreen
+import com.example.presentation.CharacterDetailsPage.CharacterDetailsViewModel
 import com.example.presentation.HomePage.HomeScreenViewModel
 import com.example.presentation.HomePage.HomeScreen
 import com.example.presentation.LandingPage.LandingPage
@@ -64,6 +66,7 @@ fun AnimeApp(
     val savedAnimeViewModel = hiltViewModel<SavedAnimeViewModel>()
     val allAnimeScreenViewModel = hiltViewModel<AllAnimeScreenViewModel>()
     val animeChaptersViewModel = hiltViewModel<AnimeChaptersViewModel>()
+    val characterDetailsViewModel = hiltViewModel<CharacterDetailsViewModel>()
     NavHost(
         navController = navController,
         startDestination = AnimeScreen.Start.route,
@@ -207,6 +210,20 @@ fun AnimeApp(
                     animeId = animeId,
                     onBackButtonClicked = { navController.navigateUp() },
                     animeChaptersViewModel = animeChaptersViewModel
+                )
+            }
+        }
+
+        composable(route = AnimeScreen.CharacterDetailsPage.route) {  backStackEntry ->
+            val characterId = backStackEntry.arguments?.getString("characterId")?.toIntOrNull()
+            if(characterId != null){
+                CharacterDetailsScreen(
+                    characterId = characterId,
+                    onAnimeClicked = {animeId ->
+                        navController.navigate("animeDetails/$animeId")
+                    },
+                    onBackButtonClicked = {navController.navigateUp()},
+                    charactersDetailsViewModel = characterDetailsViewModel
                 )
             }
         }
