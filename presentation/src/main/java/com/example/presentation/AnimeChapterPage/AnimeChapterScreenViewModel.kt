@@ -36,7 +36,6 @@ class AnimeChaptersViewModel @Inject constructor(private val animeDataRepository
             _animeChaptersUiState.value = try {
                 val result = animeDataRepository.getAnimeChapters(id=id,page=page)
                 AnimeChaptersUiState.Success(result)
-
             } catch (e: IOException) {
                 Log.e("AnimeChapter", "IOException while fetching anime data: ${e.message}")
                 AnimeChaptersUiState.Error
