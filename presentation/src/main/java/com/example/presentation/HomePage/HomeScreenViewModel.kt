@@ -84,10 +84,9 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun deleteAnimeFromFavorite(animeId: Int) {
+    fun deleteAnimeFromFavorite(animeId: Int, userId: String) {
         _isAnimeAddedToFavorite.value = false
         viewModelScope.launch {
-            val userId = loginUiState.value.userid
             try {
                authRepository.deleteAnimeFromFavorite(animeId = animeId , userId = userId)
             } catch (e: Exception) {

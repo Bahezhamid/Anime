@@ -376,7 +376,8 @@ fun IconsFunction(
 
                     allAnimeDetails?.id?.let {
                         homePageViewModel.deleteAnimeFromFavorite(
-                            animeId = it
+                            animeId = it,
+                            userId = homePageViewModel.loginUiState.value.userid
                         )
                     }
                 } else {

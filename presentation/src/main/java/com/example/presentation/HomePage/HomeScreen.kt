@@ -224,7 +224,8 @@ fun AllAnimeScreen(
                                         if (isFirstAnimeInserted) {
                                             anime.id?.let {
                                                 homePageViewModel.deleteAnimeFromFavorite(
-                                                    animeId = it
+                                                    animeId = it,
+                                                    userId = homePageViewModel.loginUiState.value.userid
                                                 )
                                             }
                                         } else {
