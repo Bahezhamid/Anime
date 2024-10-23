@@ -29,7 +29,6 @@ class CharacterDetailsViewModel @Inject constructor(private val animeDataReposit
             _characterDetails.value = CharactersDetailsUiState.Loading
             _characterDetails.value = try {
                 val result = animeDataRepository.getAllCharactersData(id=id)
-                Log.d("charactersData",result.toString())
                 CharactersDetailsUiState.Success(result)
             }catch (e: IOException) {
                 Log.e("AnimeChapter", "IOException while fetching anime data: ${e.message}")
