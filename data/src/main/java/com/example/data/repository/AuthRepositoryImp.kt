@@ -2,6 +2,9 @@ package com.example.data.repository
 
 import com.example.data.network.FirebaseService
 import com.example.domain.entity.FavoriteAnime
+import com.example.domain.entity.SuccessesUpdateEmailAndPasswordData
+import com.example.domain.entity.UpdateEmailData
+import com.example.domain.entity.UpdatePasswordData
 import com.example.domain.entity.UsersData
 import com.example.domain.repository.AuthRepository
 
@@ -24,4 +27,9 @@ class AuthRepositoryImp(
         firebaseService.getAllSavedAnime(userId = userId)
     override suspend fun getNumberOfAddedAnimeToFavorite(userId: String): Int =
         firebaseService.getNumberOfAnimeAddedToFavorite(userId = userId)
+    override suspend fun updateEmailAddress(updateEmailData: UpdateEmailData): SuccessesUpdateEmailAndPasswordData  =
+        firebaseService.updateEmailAddress(updateEmailData = updateEmailData)
+
+    override suspend fun updatePassword(updatePasswordData: UpdatePasswordData): SuccessesUpdateEmailAndPasswordData  =
+        firebaseService.updatePassword(updatePasswordData = updatePasswordData)
 }

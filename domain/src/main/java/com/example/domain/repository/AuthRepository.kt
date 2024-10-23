@@ -1,6 +1,9 @@
 package com.example.domain.repository
 
 import com.example.domain.entity.FavoriteAnime
+import com.example.domain.entity.SuccessesUpdateEmailAndPasswordData
+import com.example.domain.entity.UpdateEmailData
+import com.example.domain.entity.UpdatePasswordData
 import com.example.domain.entity.UsersData
 
 interface AuthRepository {
@@ -13,4 +16,6 @@ interface AuthRepository {
     suspend fun getAnimeStatus(animeId: Int , userId : String) :Boolean
     suspend fun getAllSavedAnime(userId: String) : List<FavoriteAnime>
     suspend fun getNumberOfAddedAnimeToFavorite(userId: String) : Int
+    suspend fun updateEmailAddress(updateEmailData: UpdateEmailData) : SuccessesUpdateEmailAndPasswordData
+    suspend fun updatePassword(updatePasswordData: UpdatePasswordData) : SuccessesUpdateEmailAndPasswordData
 }

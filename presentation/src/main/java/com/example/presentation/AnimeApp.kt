@@ -48,6 +48,8 @@ import com.example.presentation.AnimeDetailsPage.AnimeDetailsScreen
 import com.example.presentation.AnimeDetailsPage.AnimeDetailsViewModel
 import com.example.presentation.CharacterDetailsPage.CharacterDetailsScreen
 import com.example.presentation.CharacterDetailsPage.CharacterDetailsViewModel
+import com.example.presentation.EmailAndPasswordChangePage.EmailAndPasswordChangeScreen
+import com.example.presentation.EmailAndPasswordChangePage.EmailAndPasswordChangeViewModel
 import com.example.presentation.HomePage.HomeScreenViewModel
 import com.example.presentation.HomePage.HomeScreen
 import com.example.presentation.LandingPage.LandingPage
@@ -75,6 +77,7 @@ fun AnimeApp(
     val characterDetailsViewModel = hiltViewModel<CharacterDetailsViewModel>()
     val searchScreenViewModel = hiltViewModel<SearchScreenViewModel>()
     val userDetailsViewModel = hiltViewModel<UserDetailsViewModel>()
+    val emailAndPasswordChangeViewModel = hiltViewModel<EmailAndPasswordChangeViewModel>()
     NavHost(
         navController = navController,
         startDestination = AnimeScreen.Start.route,
@@ -274,6 +277,41 @@ fun AnimeApp(
                 onBackButtonClicked = {navController.navigateUp()},
                 userData = loginAndSignUpViewModel.loginUiState.collectAsState().value,
                 userDetailsViewModel = userDetailsViewModel
+            )
+        }
+
+        composable(route = AnimeScreen.EmailChangePage.route) {
+            EmailAndPasswordChangeScreen(
+                onBackButtonClicked = { navController.navigateUp()},
+                isPasswordChangePage = false,
+                emailAndPasswordChangeViewModel = emailAndPasswordChangeViewModel,
+                onSignOutClicked = {
+                    loginAndSignUpViewModel.signOut()
+                    navController.navigate(AnimeScreen.Start
+                        .route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                    savedAnimeViewModel.removeSavedAnime()
+                },
+            )
+        }
+        composable(route = AnimeScreen.PasswordChangePage.route) {
+            EmailAndPasswordChangeScreen(
+                onBackButtonClicked = { navController.navigateUp() },
+                isPasswordChangePage = true ,
+                emailAndPasswordChangeViewModel = emailAndPasswordChangeViewModel,
+                onSignOutClicked = {
+                    loginAndSignUpViewModel.signOut()
+                    navController.navigate(AnimeScreen.Start
+                        .route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                    savedAnimeViewModel.removeSavedAnime()
+                },
             )
         }
     }
