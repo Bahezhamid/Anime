@@ -119,7 +119,6 @@ class EmailAndPasswordChangeViewModel @Inject constructor(
         }
         else {
 
-
             val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
             var confirmEmailError : String? = null
 
