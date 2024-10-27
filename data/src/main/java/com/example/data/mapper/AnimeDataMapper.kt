@@ -8,7 +8,7 @@ fun Data.AnimeData(): AnimeData {
     return AnimeData(
         id = this.malId,
         title = this.title,
-        imageUrl = this.images?.jpg?.imageUrl
+        imageUrl = this.images?.jpg?.largeImageUrl
     )
 }
 
